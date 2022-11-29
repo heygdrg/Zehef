@@ -16,7 +16,7 @@ Zehef is a Mass Dm tool in Python3.
 <br><br>
 be careful high risk of ban don't try on your token,
 <br><br>
-I will make the interface later but you already can use by by replacing token and content 
+I will make the interface later but you already can use by replacing token and content 
 <br><br>
 it will run in background of the computer
 <br><br>
