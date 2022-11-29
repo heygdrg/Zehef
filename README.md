@@ -1,7 +1,7 @@
 -----
 
 <p align="center">
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fkwork.com%2Fsmm%2F20696688%2Fi-will-nft-mass-dm-dungeon-master-discord-100k-mass-dm&psig=AOvVaw3wHYzniep6qlOLN84ozj8Z&ust=1669796285584000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCODGwYX60vsCFQAAAAAdAAAAABAE", width="150", height="150">
+<img src="(https://user-images.githubusercontent.com/94129991/204476381-6c5ca037-b613-4a57-b7c7-eaf7696f17ff.png", width="150", height="150">
 </p>
 
 
