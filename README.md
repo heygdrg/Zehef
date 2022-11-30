@@ -50,4 +50,4 @@ it will run in background of the computer
 -----
 ## <h2><p align="center">✏️Author✏️</p></h2>
 * **Heygdrg** - [Github](https://github.com/heygdrg/) - BKS#1958
-* **MFR** - [Github](https://github.com/mfr-fr) 
+
