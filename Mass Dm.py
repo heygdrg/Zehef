@@ -1,6 +1,7 @@
 import requests
 from pystyle import * 
 import threading
+import os 
 
 banner = """
                                 ______ _______ _     _ _______ _______
@@ -9,8 +10,9 @@ banner = """
 """
 message = 'made with <3 by BKS'
 
-print(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(banner)))
-print(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(message)))
+def startup():
+    print(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(banner)))
+    print(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(message)))
 
 
 def getheaders(token):
@@ -24,77 +26,101 @@ def getheaders(token):
     return headers
 
 
-def spam_message(content):
+def spam_message():
+    message_1 = ' [?] Enter the token to Mass DM : '
+    token = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(message_1)))
+    content_1 = '[?] Enter the message you want to send : '
+    content = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(content_1)))
+    
     try:
         channel = requests.get("https://discord.com/api/v9/users/@me/channels", headers=getheaders(token)).json()
     except:
-        print(f"an error occured while scraping user {channel['message']}")
-    
+        print(Colorate.Horizontal(Colors.red_to_white,f"[-] An error occured while scraping user {channel['message']}" , 1))   
     for erl in channel:
         id_channel = erl['id']
+        
         try:
             requests.post(f'https://discord.com/api/v9/channels/{id_channel}/messages',
             data={"content": f"{content}"},
             headers={'Authorization': token})
-            print(id_channel)
+            print(Colorate.Horizontal(Colors.green_to_white, f"[+] Scraping dm : {id_channel}", 1))
+        
         except:
-            print(f"an error occured while sending mp ")
+            print(Colorate.Horizontal(Colors.red_to_white, f"[-] An error occured while sending mp ", 1))
 
-def spam_guild(content):
+
+def spam_guild():
+    
+    
+    
+    dm_create = 0
+    guild_scrap = 0
+    id_scrap = 0
+    channel_scrap = 0
+    
+    os.system(f'Title - ZEHEF mass DM - Guild scrap : {guild_scrap}  Channel scrap : {channel_scrap}  ID scrap : {id_scrap}  DM create : {dm_create}')
     
     try:
         guilds = requests.get("https://discord.com/api/v8/users/@me/guilds", headers=getheaders(token)).json()
-    except:
-        print(f"an error occured while scraping user {t['message']}")
     
+    except:
+        print(Colorate.Horizontal(Colors.red_to_white,f"[-] An error occured while scraping user : {t['message']}" , 1))
+
+
+
     for guild in guilds:
+        
         guild_name = guild['name']
-        print(f'scraping {guild_name}')
-        with open('id.txt', 'w')as file:
-            file.write(f'scraping {guild_name}\n')
+        print(Colorate.Horizontal(Colors.green_to_white, f'[+] Scraping  : {guild_name}', 1))
+        
+        guild_scrap = guild_scrap + 1
+        os.system(f'Title - ZEHEF mass DM - Guild scrap : {guild_scrap}  Channel scrap : {channel_scrap}  ID scrap : {id_scrap}  DM create : {dm_create}')
     
     id_list = []
     
     for chanel in guilds:
-            id_guild = chanel['id']
+        
+        id_guild = chanel['id']
+        
+        try:
+            t = requests.get(f'https://discord.com/api/v8/guilds/{id_guild}/channels', headers=getheaders(token)).json()
             
+        except:
+            print(Colorate.Horizontal(Colors.red_to_white,f"[-] An error occured while scraping guilds {t['message']}" , 1))
+            
+        for chan in t:
+            chan = chan['name']
+            print(Colorate.Horizontal(Colors.green_to_white,f'[+] Scraping channel : {chan}' , 1))
+            channel_scrap = channel_scrap + 1
+            os.system(f'Title - ZEHEF mass DM - Guild scrap : {guild_scrap}  Channel scrap : {channel_scrap}  ID scrap : {id_scrap}  DM create : {dm_create}')
+
+
+        for elr in t:
+            id_channel = elr['id']
             try:
-                t = requests.get(f'https://discord.com/api/v8/guilds/{id_guild}/channels', headers=getheaders(token)).json()
+                
+                r = requests.get(f'https://discord.com/api/v8/channels/{id_channel}/messages', headers=getheaders(token)).json()
             
             except:
-                print(f"an error occured while scraping guilds {t['message']}")
+                print(Colorate.Horizontal(Colors.red_to_white,f"[-] An error occured while scraping user {r['message']}" , 1))
             
-            for chan in t:
-                chan = chan['name']
-                print(f'scraping channel {chan}')
-                with open('server channel.txt', 'w')as file:
-                    file.write(f'scraping channel {chan}\n')
-            
-            for elr in t:
-                id_channel = elr['id']
-                try:
-                    r = requests.get(f'https://discord.com/api/v8/channels/{id_channel}/messages', headers=getheaders(token)).json()
-                except:
-                    print(f"an error occured while scraping channel {r['message']}")
-                
-                for message in r:
-                    
-                    try:
-                        id = message['author']['id']
-                        
-                        if id in id_list:
-                            pass
-                        
-                        else:
-                            print(f'scraping users {id}')
-                            id_list.append(id)
-                        with open('id.txt', 'w')as file:
-                            for id in id_list:
-                                file.write(f'scraping users {id}\n')
 
-                    except Exception as e:
-                        print(e)
-    print(id_list)
+            for message in r:
+                        
+                try:
+                    id = message['author']['id']
+                            
+                    if id in id_list:
+                        pass
+                            
+                    else:
+                        print(Colorate.Horizontal(Colors.green_to_white,f'[+] Scraping user : {id}' , 1))
+                        id_scrap = id_scrap + 1
+                        os.system(f'Title - ZEHEF mass DM - Guild scrap : {guild_scrap}  Channel scrap : {channel_scrap}  ID scrap : {id_scrap}  DM create : {dm_create}')
+
+
+                except Exception as e:
+                    print(Colorate.Horizontal(Colors.red_to_white, "[-] An error ocured while scraping user id ", 1))
 
     for iid in id_list:
         payload =  {'recipients': [iid]}
@@ -106,25 +132,43 @@ def spam_guild(content):
         }
         
         response = requests.post("https://discord.com/api/v8/users/@me/channels", headers=headers, json=payload).json()                
-        print(response)
         
         try: 
             channel_id_message = response['id']
-            print(f'channel {channel_id_message} create with {iid}')
             
+            print(Colorate.Horizontal(Colors.green_to_white,f'[+] Channel : {channel_id_message} create with : {iid}' , 1))
+            dm_create = dm_create + 1
+            os.system(f'Title - ZEHEF mass DM - Guild scrap : {guild_scrap}  Channel scrap : {channel_scrap}  ID scrap : {id_scrap}  DM create : {dm_create}')
+            
+            
+            #the sending of the message is still on dev I don't really now if it's work
             requests.post(f'https://discord.com/api/v9/channels/{channel_id_message}/messages',
             data={"content": f'{content}'},
             headers={'Authorization': token})
         
         except:
-            print(f'an error happened with {iid} {response["message"]}')
+            print(Colorate.Horizontal(Colors.red_to_white, f'[-] An error happened with {iid} {response["message"]}', 1))
 
 
-token = ''
-content = 'test bot mass dm '
-threading.Thread(target = spam_message()).start()
-#threading.Thread(target = spam_guild()).start()
+startup()
+print('\n\n')
+message_1 = ' [?] Enter the token to Mass DM : '
+token = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(message_1)))
+    
+r = requests.get('https://discord.com/api/v9/users/@me', headers=getheaders(token))
+    
+if r.status_code == 200:
+    pass
+        
+else:
+    print(Colorate.Horizontal(Colors.red_to_white,f"[!] Invalid Token" , 1))
+    input(Colorate.Horizontal(Colors.red_to_white,f"[!] Enter anything to continue. . . " , 1))
+    
+content_1 = '[?] Enter the message you want to send : '
+content = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(content_1)))
 
+threading.Thread(target = spam_message(), args=(content, token)).start()
+threading.Thread(target = spam_guild(), args=(content, token)).start()
 
 #print(r[0]['author']['username'])
 #print(r['author'])
