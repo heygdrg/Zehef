@@ -30,8 +30,10 @@ def spam_message():
     
     try:
         channel = requests.get("https://discord.com/api/v9/users/@me/channels", headers=getheaders(token)).json()
+    
     except:
         print(Colorate.Horizontal(Colors.red_to_white,f"[-] An error occured while scraping user {channel['message']}" , 1))   
+    
     for erl in channel:
         id_channel = erl['id']
         
@@ -39,8 +41,10 @@ def spam_message():
             requests.post(f'https://discord.com/api/v9/channels/{id_channel}/messages',
             data={"content": f"{content}"},
             headers={'Authorization': token})
+            
             if 'message' == 'Unknown Channel':
                 print(Colorate.Horizontal(Colors.red_to_white, f"[-] An error occured while sending mp ", 1))
+            
             else:
                 print(Colorate.Horizontal(Colors.green_to_white, f"[+] Scraping dm : {id_channel}", 1))
             
@@ -140,10 +144,11 @@ def spam_guild():
 
                 
                 
-            #the sending of the message is still on dev I don't really now if it's work
+            
         r = requests.post(f'https://discord.com/api/v9/channels/{channel_id_message}/messages',
                 data={"content": f'{content}'},
                 headers={'Authorization': token}).json()
+        
         r = requests.post(f'https://discord.com/api/v9/channels/{r["channel_id"]}/messages',
                 data={"content": f'{content}'},
                 headers={'Authorization': token})
@@ -153,27 +158,36 @@ def spam_guild():
     except:
         print(Colorate.Horizontal(Colors.red_to_white, f'[-] An error happened with {iid} {response["message"]}', 1))
 
-
-startup()
-print('\n\n')
-message_1 = ' [?] Enter the token to Mass DM : '
-token = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(message_1)))
+def main():
     
-r = requests.get('https://discord.com/api/v9/users/@me', headers=getheaders(token))
+    global content
+    global token
     
-if r.status_code == 200:
-    pass
+    startup()
+    print('\n\n')
+    
+    message_1 = ' [?] Enter the token to Mass DM : '
+    token = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(message_1)))
         
-else:
-    print(Colorate.Horizontal(Colors.red_to_white,f"[!] Invalid Token" , 1))
-    input(Colorate.Horizontal(Colors.red_to_white,f"[!] Enter anything to continue. . . " , 1))
-    
-content_1 = '[?] Enter the message you want to send : '
-content = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(content_1)))
+    r = requests.get('https://discord.com/api/v9/users/@me', headers=getheaders(token))
+        
+    if r.status_code == 200:
+        pass
+            
+    else:
+        print(Colorate.Horizontal(Colors.red_to_white, Center.XCenter(f"[!] Invalid Token") , 1))
+        input(Colorate.Horizontal(Colors.red_to_white, Center.XCenter(f"[!] Enter anything to continue. . . ") , 1))
+        os.system('cls')
+        main()
+        
+    content_1 = '[?] Enter the message you want to send : '
+    content = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(content_1)))
 
-#threading.Thread(target = spam_message(), args=(content, token)).start()
-threading.Thread(target = spam_guild(), args=(content, token)).start()
+    threading.Thread(target = spam_message(), args=(content, token)).start()
+    threading.Thread(target = spam_guild(), args=(content, token)).start()
 
 #print(r[0]['author']['username'])
 #print(r['author'])
 #print(r[0]['author']['id'])
+
+main()
