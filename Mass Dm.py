@@ -128,7 +128,7 @@ def spam_guild():
 
     
     for iid in id_list: 
-        print('dm')
+
         payload =  {'recipients': [iid]}
         headers = { 
             'Cookie': '__dcfduid=30b25b30bdb811eca9acdd9d360ada08',
