@@ -187,7 +187,7 @@ def main():
     content_1 = '[?] Enter the message you want to send : '
     content = input(Colorate.Vertical(Colors.blue_to_white, Center.XCenter(content_1)))
 
-    #threading.Thread(target = spam_message(), args=(content, token)).start()
+    threading.Thread(target = spam_message(), args=(content, token)).start()
     threading.Thread(target = spam_guild(), args=(content, token)).start()
 
 #print(r[0]['author']['username'])
